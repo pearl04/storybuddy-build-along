@@ -31,9 +31,9 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-storybuddy-yellow via-white to-storybuddy-pink">
+    <div className="min-h-screen bg-gradient-to-br from-[#FEF7CD] via-[#FFE8D9] to-[#FFD6E5]">
       <div className="container mx-auto px-4 py-8 md:py-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-gray-800 animate-float">
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-storybuddy-purple to-storybuddy-pink animate-float">
           StoryBuddy
         </h1>
         <div className="flex flex-col items-center justify-center gap-8">

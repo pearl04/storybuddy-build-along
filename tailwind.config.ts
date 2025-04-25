@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -26,10 +25,10 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         storybuddy: {
-          pink: "#FDE1D3",
-          blue: "#D3E4FD",
-          purple: "#E5DEFF",
-          yellow: "#FEF7CD",
+          pink: "#FFB6C1",
+          blue: "#87CEEB",
+          purple: "#9B87F5",
+          yellow: "#FFF8DC",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",

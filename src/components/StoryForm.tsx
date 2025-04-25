@@ -99,8 +99,8 @@ const StoryForm = ({ onSubmit }: StoryFormProps) => {
   };
 
   return (
-    <Card className="w-full max-w-md p-6 bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl border-2 border-storybuddy-pink">
-      <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
+    <Card className="w-full max-w-md p-6 bg-gradient-to-br from-white via-white/95 to-storybuddy-yellow/20 backdrop-blur-sm shadow-xl rounded-2xl border-2 border-storybuddy-purple">
+      <h2 className="text-2xl font-semibold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-storybuddy-purple to-storybuddy-pink">
         {steps[currentStep].title}
       </h2>
       <div className="mb-6">
