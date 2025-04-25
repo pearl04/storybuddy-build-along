@@ -31,25 +31,25 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FFE5E5] via-[#E5E5FF] to-[#E0F4FF] animate-gradient bg-size-200 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-storybuddy-cream via-storybuddy-pink to-storybuddy-peach animate-gradient bg-size-200 relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <Cloud className="absolute top-20 left-[10%] text-white/40 w-16 h-16 animate-float" />
-        <Cloud className="absolute top-40 right-[15%] text-white/30 w-12 h-12 animate-float" style={{ animationDelay: "1s" }} />
-        <Star className="absolute top-32 left-[25%] text-yellow-200/60 w-8 h-8 animate-pulse" />
-        <Star className="absolute bottom-32 right-[20%] text-yellow-200/60 w-6 h-6 animate-pulse" style={{ animationDelay: "0.5s" }} />
-        <Moon className="absolute top-24 right-[30%] text-white/50 w-10 h-10 animate-float" style={{ animationDelay: "1.5s" }} />
-        <Sparkle className="absolute bottom-40 left-[15%] text-yellow-200/70 w-8 h-8 animate-pulse" style={{ animationDelay: "0.7s" }} />
+        <Cloud className="absolute top-20 left-[10%] text-storybuddy-blue/40 w-16 h-16 animate-float" />
+        <Cloud className="absolute top-40 right-[15%] text-storybuddy-blue/30 w-12 h-12 animate-float" style={{ animationDelay: "1s" }} />
+        <Star className="absolute top-32 left-[25%] text-storybuddy-lavender/60 w-8 h-8 animate-pulse" />
+        <Star className="absolute bottom-32 right-[20%] text-storybuddy-lavender/60 w-6 h-6 animate-pulse" style={{ animationDelay: "0.5s" }} />
+        <Moon className="absolute top-24 right-[30%] text-storybuddy-blue/50 w-10 h-10 animate-float" style={{ animationDelay: "1.5s" }} />
+        <Sparkle className="absolute bottom-40 left-[15%] text-storybuddy-peach/70 w-8 h-8 animate-pulse" style={{ animationDelay: "0.7s" }} />
       </div>
 
       <div className="container mx-auto px-4 py-8 md:py-16 relative">
-        {/* Title section with mascot */}
+        {/* Title section */}
         <div className="flex flex-col items-center mb-12">
           <div className="text-center relative">
-            <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-[#6A5ACD] drop-shadow-lg animate-float font-poppins">
+            <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-storybuddy-lavender drop-shadow-lg animate-float font-poppins">
               StoryBuddy
             </h1>
-            <p className="text-lg md:text-xl text-[#7B68EE]/80 font-nunito max-w-md mx-auto">
+            <p className="text-lg md:text-xl text-storybuddy-blue/80 font-nunito max-w-md mx-auto">
               Your magical companion for bedtime stories ✨
             </p>
           </div>
@@ -57,10 +57,10 @@ const Index = () => {
 
         <div className="flex flex-col items-center justify-center gap-8 relative">
           {isGenerating ? (
-            <Card className="w-full max-w-md p-6 bg-white/80 backdrop-blur-sm shadow-xl rounded-3xl border-2 border-[#E6E6FA]/30">
+            <Card className="w-full max-w-md p-6 bg-storybuddy-pink/80 backdrop-blur-sm shadow-xl rounded-3xl border-2 border-storybuddy-peach/30">
               <div className="flex flex-col items-center gap-4">
-                <Loader className="w-8 h-8 animate-spin text-[#9370DB]" />
-                <p className="text-lg font-medium text-[#6A5ACD] font-poppins">
+                <Loader className="w-8 h-8 animate-spin text-storybuddy-lavender" />
+                <p className="text-lg font-medium text-storybuddy-lavender font-poppins">
                   Creating your magical story...
                 </p>
               </div>

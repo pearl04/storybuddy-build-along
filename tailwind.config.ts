@@ -29,12 +29,11 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         storybuddy: {
-          pink: "#FF69B4",
-          blue: "#4169E1",
-          purple: "#8A2BE2",
-          yellow: "#FFD700",
-          green: "#3CB371",
-          orange: "#FF7F50",
+          cream: "#FEF6E4",
+          pink: "#FFF3F3",
+          peach: "#FCD5CE",
+          lavender: "#D0BDF4",
+          blue: "#A3C4F3",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
