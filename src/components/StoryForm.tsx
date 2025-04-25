@@ -99,8 +99,8 @@ const StoryForm = ({ onSubmit }: StoryFormProps) => {
   };
 
   return (
-    <Card className="w-full max-w-md p-6 bg-gradient-to-br from-white via-white/95 to-storybuddy-yellow/20 backdrop-blur-sm shadow-xl rounded-2xl border-2 border-storybuddy-purple">
-      <h2 className="text-2xl font-semibold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-storybuddy-purple to-storybuddy-pink">
+    <Card className="w-full max-w-md p-6 bg-gradient-to-br from-[#FF7F50] via-[#FF69B4] to-[#4169E1] backdrop-blur-sm shadow-xl rounded-2xl border-2 border-white/30">
+      <h2 className="text-2xl font-semibold text-center mb-6 text-white drop-shadow-md">
         {steps[currentStep].title}
       </h2>
       <div className="mb-6">
@@ -109,7 +109,7 @@ const StoryForm = ({ onSubmit }: StoryFormProps) => {
       <Button 
         onClick={handleNext}
         disabled={!isStepValid()}
-        className="w-full bg-gradient-to-r from-storybuddy-purple to-storybuddy-pink hover:opacity-90 transition-all duration-300"
+        className="w-full bg-gradient-to-r from-[#8A2BE2] to-[#3CB371] text-white hover:opacity-90 transition-all duration-300"
       >
         {currentStep === steps.length - 1 ? (
           <div className="flex items-center gap-2">
@@ -125,3 +125,4 @@ const StoryForm = ({ onSubmit }: StoryFormProps) => {
 };
 
 export default StoryForm;
+

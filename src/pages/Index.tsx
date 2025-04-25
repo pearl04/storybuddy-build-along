@@ -31,28 +31,28 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FEF7CD] via-[#FFE8D9] to-[#FFD6E5]">
+    <div className="min-h-screen bg-gradient-to-br from-[#FF69B4] via-[#4169E1] to-[#8A2BE2] animate-gradient bg-size-200">
       <div className="container mx-auto px-4 py-8 md:py-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-storybuddy-purple to-storybuddy-pink animate-float">
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-white drop-shadow-xl animate-float">
           StoryBuddy
         </h1>
         <div className="flex flex-col items-center justify-center gap-8">
           {isGenerating ? (
-            <Card className="w-full max-w-md p-6 bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl border-2 border-storybuddy-purple">
+            <Card className="w-full max-w-md p-6 bg-white/20 backdrop-blur-sm shadow-xl rounded-2xl border-2 border-white/30">
               <div className="flex flex-col items-center gap-4">
-                <Loader className="w-8 h-8 animate-spin text-storybuddy-purple" />
-                <p className="text-lg font-medium text-gray-800">
+                <Loader className="w-8 h-8 animate-spin text-white" />
+                <p className="text-lg font-medium text-white">
                   Creating your magical story...
                 </p>
               </div>
             </Card>
           ) : error ? (
-            <Card className="w-full max-w-md p-6 bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl border-2 border-red-300">
+            <Card className="w-full max-w-md p-6 bg-red-500/20 backdrop-blur-sm shadow-xl rounded-2xl border-2 border-red-300">
               <div className="flex flex-col items-center gap-4">
-                <p className="text-red-500">{error}</p>
+                <p className="text-red-100">{error}</p>
                 <button
                   onClick={() => setError(null)}
-                  className="text-blue-500 hover:underline"
+                  className="text-white hover:underline"
                 >
                   Try Again
                 </button>
@@ -73,3 +73,4 @@ const Index = () => {
 };
 
 export default Index;
+

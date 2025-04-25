@@ -25,10 +25,12 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         storybuddy: {
-          pink: "#FFB6C1",
-          blue: "#87CEEB",
-          purple: "#9B87F5",
-          yellow: "#FFF8DC",
+          pink: "#FF69B4",
+          blue: "#4169E1",
+          purple: "#8A2BE2",
+          yellow: "#FFD700",
+          green: "#3CB371",
+          orange: "#FF7F50",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -82,6 +84,11 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         float: "float 6s ease-in-out infinite",
+      },
+      backgroundImage: {
+        'story-gradient': 'linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%)',
+        'form-gradient': 'linear-gradient(to right, #6A11CB 0%, #2575FC 100%)',
+        'reading-gradient': 'linear-gradient(120deg, #f093fb 0%, #f5576c 100%)',
       },
     },
   },
