@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Play, BookOpen } from "lucide-react";
+import { Play, BookOpen, Star, Sparkles } from "lucide-react";
 
 interface StoryDisplayProps {
   story: string;
@@ -60,4 +60,3 @@ const StoryDisplay = ({ story, onRegenerate }: StoryDisplayProps) => {
 };
 
 export default StoryDisplay;
-

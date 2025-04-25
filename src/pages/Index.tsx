@@ -3,7 +3,7 @@ import { useState } from "react";
 import StoryForm from "@/components/StoryForm";
 import StoryDisplay from "@/components/StoryDisplay";
 import { Card } from "@/components/ui/card";
-import { Loader } from "lucide-react";
+import { Loader, Sparkles } from "lucide-react";
 
 const Index = () => {
   const [isGenerating, setIsGenerating] = useState(false);
@@ -33,15 +33,17 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FF69B4] via-[#4169E1] to-[#8A2BE2] animate-gradient bg-size-200">
       <div className="container mx-auto px-4 py-8 md:py-16">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-white drop-shadow-xl animate-float">
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-white drop-shadow-xl animate-float font-nunito flex items-center justify-center gap-2">
+          <Sparkles className="w-8 h-8 text-yellow-300" />
           StoryBuddy
+          <Sparkles className="w-8 h-8 text-yellow-300" />
         </h1>
         <div className="flex flex-col items-center justify-center gap-8">
           {isGenerating ? (
             <Card className="w-full max-w-md p-6 bg-white/20 backdrop-blur-sm shadow-xl rounded-2xl border-2 border-white/30">
               <div className="flex flex-col items-center gap-4">
                 <Loader className="w-8 h-8 animate-spin text-white" />
-                <p className="text-lg font-medium text-white">
+                <p className="text-lg font-medium text-white font-nunito">
                   Creating your magical story...
                 </p>
               </div>
@@ -49,10 +51,10 @@ const Index = () => {
           ) : error ? (
             <Card className="w-full max-w-md p-6 bg-red-500/20 backdrop-blur-sm shadow-xl rounded-2xl border-2 border-red-300">
               <div className="flex flex-col items-center gap-4">
-                <p className="text-red-100">{error}</p>
+                <p className="text-red-100 font-nunito">{error}</p>
                 <button
                   onClick={() => setError(null)}
-                  className="text-white hover:underline"
+                  className="text-white hover:underline font-nunito"
                 >
                   Try Again
                 </button>
@@ -73,4 +75,3 @@ const Index = () => {
 };
 
 export default Index;
-

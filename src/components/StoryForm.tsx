@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Play } from "lucide-react";
+import { Play, Star, Sparkles } from "lucide-react";
 
 interface StoryFormProps {
   onSubmit: (data: {
@@ -100,21 +100,26 @@ const StoryForm = ({ onSubmit }: StoryFormProps) => {
 
   return (
     <Card className="w-full max-w-md p-6 bg-gradient-to-br from-[#FF7F50] via-[#FF69B4] to-[#4169E1] backdrop-blur-sm shadow-xl rounded-2xl border-2 border-white/30">
-      <h2 className="text-2xl font-semibold text-center mb-6 text-white drop-shadow-md">
-        {steps[currentStep].title}
-      </h2>
-      <div className="mb-6">
+      <div className="flex items-center justify-center gap-2 mb-6">
+        <Star className="w-5 h-5 text-yellow-300 animate-float" />
+        <h2 className="text-2xl font-semibold text-center text-white drop-shadow-md font-nunito">
+          {steps[currentStep].title}
+        </h2>
+        <Star className="w-5 h-5 text-yellow-300 animate-float" style={{ animationDelay: "0.5s" }} />
+      </div>
+      <div className="mb-6 space-y-4">
         {steps[currentStep].component}
       </div>
       <Button 
         onClick={handleNext}
         disabled={!isStepValid()}
-        className="w-full bg-gradient-to-r from-[#8A2BE2] to-[#3CB371] text-white hover:opacity-90 transition-all duration-300"
+        className="w-full bg-gradient-to-r from-[#8A2BE2] to-[#3CB371] text-white hover:opacity-90 transition-all duration-300 font-nunito"
       >
         {currentStep === steps.length - 1 ? (
           <div className="flex items-center gap-2">
-            <Play className="w-4 h-4" />
+            <Sparkles className="w-4 h-4" />
             <span>Generate Story</span>
+            <Sparkles className="w-4 h-4" />
           </div>
         ) : (
           "Next"
@@ -125,4 +130,3 @@ const StoryForm = ({ onSubmit }: StoryFormProps) => {
 };
 
 export default StoryForm;
-
