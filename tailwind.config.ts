@@ -19,8 +19,8 @@ export default {
     },
     extend: {
       fontFamily: {
+        poppins: ['Poppins', 'system-ui', 'sans-serif'],
         nunito: ['Nunito', 'sans-serif'],
-        story: ['Nunito', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -81,6 +81,14 @@ export default {
             transform: "translateY(0)"
           }
         },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        pulse: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.5" },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -89,16 +97,13 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
-        },
       },
       animation: {
         "fade-in": "fade-in 0.5s ease-out",
+        float: "float 6s ease-in-out infinite",
+        pulse: "pulse 3s ease-in-out infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        float: "float 6s ease-in-out infinite",
       },
       backgroundImage: {
         'story-gradient': 'linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%)',
