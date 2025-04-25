@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { play } from "lucide-react";
+import { Play } from "lucide-react";
 
 interface StoryDisplayProps {
   story: string;
@@ -22,7 +22,7 @@ const StoryDisplay = ({ story, onRegenerate }: StoryDisplayProps) => {
         className="w-full bg-gradient-to-r from-storybuddy-blue to-storybuddy-purple hover:opacity-90 transition-all duration-300"
       >
         <div className="flex items-center gap-2">
-          <play className="w-4 h-4" />
+          <Play className="w-4 h-4" />
           <span>Generate New Story</span>
         </div>
       </Button>

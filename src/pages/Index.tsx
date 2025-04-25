@@ -3,7 +3,7 @@ import { useState } from "react";
 import StoryForm from "@/components/StoryForm";
 import StoryDisplay from "@/components/StoryDisplay";
 import { Card } from "@/components/ui/card";
-import { loader } from "lucide-react";
+import { Loader } from "lucide-react";
 
 const Index = () => {
   const [isGenerating, setIsGenerating] = useState(false);
@@ -40,7 +40,7 @@ const Index = () => {
           {isGenerating ? (
             <Card className="w-full max-w-md p-6 bg-white/80 backdrop-blur-sm shadow-xl rounded-2xl border-2 border-storybuddy-purple">
               <div className="flex flex-col items-center gap-4">
-                <loader className="w-8 h-8 animate-spin text-storybuddy-purple" />
+                <Loader className="w-8 h-8 animate-spin text-storybuddy-purple" />
                 <p className="text-lg font-medium text-gray-800">
                   Creating your magical story...
                 </p>

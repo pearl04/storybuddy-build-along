@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { play } from "lucide-react";
+import { Play } from "lucide-react";
 
 interface StoryFormProps {
   onSubmit: (data: {
@@ -113,7 +113,7 @@ const StoryForm = ({ onSubmit }: StoryFormProps) => {
       >
         {currentStep === steps.length - 1 ? (
           <div className="flex items-center gap-2">
-            <play className="w-4 h-4" />
+            <Play className="w-4 h-4" />
             <span>Generate Story</span>
           </div>
         ) : (
