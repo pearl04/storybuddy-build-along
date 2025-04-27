@@ -1,1 +1,9 @@
-project_id = "bfpeaeeshgwlmchixhbv"
+[api]
+  port = 54331
+
+[db]
+  port = 54332
+  shadow_port = 54333
+
+[studio]
+  port = 54334

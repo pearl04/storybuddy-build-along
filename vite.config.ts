@@ -8,6 +8,13 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    proxy: {
+      '/functions/v1': {
+        target: process.env.VITE_SUPABASE_URL,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/functions\/v1/, '/rest/v1'),
+      },
+    },
   },
   plugins: [
     react(),

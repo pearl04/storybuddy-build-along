@@ -1,25 +1,32 @@
+// src/components/StoryForm.tsx
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Play, Star, Sparkles } from "lucide-react";
+import { callAIModel } from "@/utils/ai-utils/callModel";
+import { useDeviceId } from "@/hooks/useDeviceId";
 
 interface StoryFormProps {
-  onSubmit: (data: {
-    childName: string;
-    childAge: string;
-    storyTheme: string;
-  }) => void;
+  onStoryGenerated: (data: { childName: string; childAge: string; storyTheme: string; story?: string }) => void;
 }
 
-const StoryForm = ({ onSubmit }: StoryFormProps) => {
+const StoryForm = ({ onStoryGenerated }: StoryFormProps) => {
+  const deviceId = useDeviceId();
   const [childName, setChildName] = useState("");
   const [childAge, setChildAge] = useState("");
   const [storyTheme, setStoryTheme] = useState("");
   const [currentStep, setCurrentStep] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const steps = [
     {
@@ -77,14 +84,6 @@ const StoryForm = ({ onSubmit }: StoryFormProps) => {
     },
   ];
 
-  const handleNext = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
-    } else {
-      onSubmit({ childName, childAge, storyTheme });
-    }
-  };
-
   const isStepValid = () => {
     switch (currentStep) {
       case 0:
@@ -95,6 +94,37 @@ const StoryForm = ({ onSubmit }: StoryFormProps) => {
         return storyTheme !== "";
       default:
         return false;
+    }
+  };
+
+  const handleNext = async () => {
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      setLoading(true);
+
+      const prompt = `
+Write a magical bedtime story for a ${childAge}-year-old child named ${childName}.
+The theme is ${storyTheme}.
+Make it 4–6 sentences long, comforting, and imaginative.
+End with a soft line like: "And then they drifted off to sleep under the stars..."
+`.trim();
+
+      try {
+        const storyResult = await callAIModel(deviceId, "StoryBuddy", prompt);
+        setLoading(false);
+
+        if (!storyResult) {
+          console.error("AI Model returned nothing");
+          onStoryGenerated({ childName, childAge, storyTheme });
+        } else {
+          onStoryGenerated({ childName, childAge, storyTheme, story: storyResult });
+        }
+      } catch (error) {
+        console.error("Error during story generation:", error);
+        setLoading(false);
+        onStoryGenerated({ childName, childAge, storyTheme });
+      }
     }
   };
 
@@ -110,12 +140,12 @@ const StoryForm = ({ onSubmit }: StoryFormProps) => {
       <div className="mb-6 space-y-4">
         {steps[currentStep].component}
       </div>
-      <Button 
+      <Button
         onClick={handleNext}
-        disabled={!isStepValid()}
+        disabled={!isStepValid() || loading}
         className="w-full bg-gradient-to-r from-[#8A2BE2] to-[#3CB371] text-white hover:opacity-90 transition-all duration-300 font-nunito"
       >
-        {currentStep === steps.length - 1 ? (
+        {loading ? "✨ Generating..." : currentStep === steps.length - 1 ? (
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4" />
             <span>Generate Story</span>

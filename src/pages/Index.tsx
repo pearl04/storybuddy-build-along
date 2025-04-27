@@ -1,7 +1,7 @@
-
 import { useState } from "react";
 import StoryForm from "@/components/StoryForm";
 import StoryDisplay from "@/components/StoryDisplay";
+import { callAIModel } from "@/utils/ai-utils/callModel";
 import { Card } from "@/components/ui/card";
 import { Loader, Star, Moon, Cloud, Sparkle } from "lucide-react";
 
@@ -10,21 +10,27 @@ const Index = () => {
   const [generatedStory, setGeneratedStory] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleFormSubmit = async (data: {
-    childName: string;
-    childAge: string;
-    storyTheme: string;
-  }) => {
+  const handleStoryGenerated = async (childName: string, childAge: string, storyTheme: string) => {
     setIsGenerating(true);
     setError(null);
 
     try {
-      // This is where you'll plug in your AI logic later
-      // For now, we'll simulate a delay and return a placeholder story
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      setGeneratedStory(`Once upon a time, there was a ${data.childAge} year old child named ${data.childName} who loved ${data.storyTheme} stories...`);
-    } catch (err) {
-      setError("Oops! Something went wrong. Please try again.");
+      const prompt = `Write a creative and engaging children's bedtime story about "${storyTheme}", featuring a ${childAge} year old child named "${childName}". Make it magical but easy to understand for a child.`;
+
+      const result = await callAIModel({
+        prompt,
+        deviceId: "storybuddy-device-1",
+        app: "StoryBuddy",
+      });
+
+      if (!result || !result.success) {
+        throw new Error(result?.error || "Something went wrong!");
+      }
+
+      setGeneratedStory(result.data);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || "Oops! Something went wrong. Please try again.");
     } finally {
       setIsGenerating(false);
     }
@@ -43,18 +49,17 @@ const Index = () => {
       </div>
 
       <div className="container mx-auto px-4 py-8 md:py-16 relative">
-        {/* Title section */}
+        {/* Title */}
         <div className="flex flex-col items-center mb-12">
-          <div className="text-center relative">
-            <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-storybuddy-lavender drop-shadow-lg animate-float font-poppins">
-              StoryBuddy
-            </h1>
-            <p className="text-lg md:text-xl text-storybuddy-blue/80 font-nunito max-w-md mx-auto">
-              Your magical companion for bedtime stories ✨
-            </p>
-          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-4 text-storybuddy-lavender drop-shadow-lg animate-float font-poppins">
+            StoryBuddy
+          </h1>
+          <p className="text-lg md:text-xl text-storybuddy-blue/80 font-nunito max-w-md mx-auto">
+            Your magical companion for bedtime stories ✨
+          </p>
         </div>
 
+        {/* Main content */}
         <div className="flex flex-col items-center justify-center gap-8 relative">
           {isGenerating ? (
             <Card className="w-full max-w-md p-6 bg-storybuddy-pink/80 backdrop-blur-sm shadow-xl rounded-3xl border-2 border-storybuddy-peach/30">
@@ -80,10 +85,12 @@ const Index = () => {
           ) : generatedStory ? (
             <StoryDisplay
               story={generatedStory}
-              onRegenerate={() => handleFormSubmit({ childName: "Test", childAge: "5", storyTheme: "adventure" })}
+              onRegenerate={() => setGeneratedStory(null)}
             />
           ) : (
-            <StoryForm onSubmit={handleFormSubmit} />
+            <Card className="w-full max-w-md p-6 bg-storybuddy-pink/80 backdrop-blur-sm shadow-xl rounded-3xl border-2 border-storybuddy-peach/30">
+              <StoryForm onStoryGenerated={({ childName, childAge, storyTheme }) => handleStoryGenerated(childName, childAge, storyTheme)} />
+            </Card>
           )}
         </div>
       </div>
