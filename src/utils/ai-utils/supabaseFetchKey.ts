@@ -12,7 +12,7 @@ export async function fetchOpenRouterKey() {
     }
 
     const { key } = await res.json();
-    console.log("✅ OpenRouter key fetched:", key);
+    console.log("✅ OpenRouter key fetched:", "success");
     return key;
   } catch (error) {
     console.error("❌ Error fetching OpenRouter Key:", error);
