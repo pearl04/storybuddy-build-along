@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Play, Download } from "lucide-react";
 import html2canvas from "html2canvas";
+import domtoimage from "dom-to-image-more";
 
 interface StoryDisplayProps {
   story: string;
@@ -16,9 +17,9 @@ const StoryDisplay = ({ story, onRegenerate }: StoryDisplayProps) => {
 
   const downloadAsImage = async () => {
     if (captureRef.current) {
-      const canvas = await html2canvas(captureRef.current, { backgroundColor: null });
+      const dataUrl = await domtoimage.toPng(captureRef.current);
       const link = document.createElement("a");
-      link.href = canvas.toDataURL("image/png");
+      link.href = dataUrl;
       link.download = "storybuddy-story.png";
       link.click();
     }
