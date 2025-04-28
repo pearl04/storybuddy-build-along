@@ -105,9 +105,9 @@ const StoryForm = ({ onStoryGenerated }: StoryFormProps) => {
         alert("Please fill in all fields before generating the story!");
         return;
       }
-
+  
       setLoading(true);
-
+  
       try {
         const storyResult = await callAIModel(
           deviceId,
@@ -117,20 +117,21 @@ const StoryForm = ({ onStoryGenerated }: StoryFormProps) => {
           storyTheme
         );
         setLoading(false);
-
+  
         if (!storyResult) {
           console.error("AI Model returned nothing");
-          onStoryGenerated({ childName, childAge, storyTheme });
+          alert("Something went wrong. Please try again!");
         } else {
           onStoryGenerated({ childName, childAge, storyTheme, story: storyResult });
         }
       } catch (error) {
         console.error("Error during story generation:", error);
         setLoading(false);
-        onStoryGenerated({ childName, childAge, storyTheme });
+        alert("Something went wrong. Please try again!");
       }
     }
   };
+  
 
   return (
     <Card className="w-full max-w-md p-6 bg-gradient-to-br from-[#FF7F50] via-[#FF69B4] to-[#4169E1] backdrop-blur-sm shadow-xl rounded-2xl border-2 border-white/30">
