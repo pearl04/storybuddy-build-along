@@ -1,8 +1,10 @@
-import React, { useRef, useState } from "react";
+// src/components/StoryDisplay.tsx
+
+import React, { useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Play, Download, Star } from "lucide-react";
-import { toPng } from 'html-to-image';
+import { Play, Download } from "lucide-react";
+import html2canvas from "html2canvas";
 
 interface StoryDisplayProps {
   story: string;
@@ -10,34 +12,43 @@ interface StoryDisplayProps {
 }
 
 const StoryDisplay = ({ story, onRegenerate }: StoryDisplayProps) => {
-  const [isReading, setIsReading] = useState(false);
-  const storyRef = useRef<HTMLDivElement>(null);
+  const captureRef = useRef<HTMLDivElement>(null);
 
-  const handleDownload = async () => {
-    if (storyRef.current === null) return;
-
-    try {
-      const dataUrl = await toPng(storyRef.current, { quality: 1, pixelRatio: 2 });
-      const link = document.createElement('a');
-      link.download = 'storybuddy-story.png';
-      link.href = dataUrl;
+  const downloadAsImage = async () => {
+    if (captureRef.current) {
+      const canvas = await html2canvas(captureRef.current, { backgroundColor: null });
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL("image/png");
+      link.download = "storybuddy-story.png";
       link.click();
-    } catch (err) {
-      console.error('Failed to download image', err);
     }
   };
 
+  if (!story) {
+    return (
+      <Card className="w-full max-w-xl p-6 text-center text-gray-600">
+        <p>📖 No story to show yet. Let’s generate a magical tale!</p>
+      </Card>
+    );
+  }
+
   return (
-    <Card className="w-full max-w-2xl p-6 bg-gradient-to-br from-storybuddy-cream via-storybuddy-pink to-storybuddy-peach backdrop-blur-sm shadow-xl rounded-3xl border-2 border-white/30">
-      <div ref={storyRef} className="prose max-w-none mb-6 p-6 bg-white/70 rounded-2xl">
-        <div className="text-lg leading-relaxed text-gray-700 whitespace-pre-wrap font-poppins">
+    <div className="flex flex-col items-center gap-6">
+      {/* This is the magical area we will screenshot */}
+      <div
+        ref={captureRef}
+        className="w-full max-w-2xl p-8 bg-gradient-to-br from-[#FF7F50]/30 via-[#FF69B4]/30 to-[#4169E1]/30 backdrop-blur-md shadow-2xl rounded-3xl border-2 border-white/40 text-gray-800 font-poppins"
+      >
+        <div className="prose max-w-none text-lg leading-relaxed whitespace-pre-wrap">
           {story}
         </div>
       </div>
-      <div className="flex gap-4 mt-4">
+
+      {/* Buttons */}
+      <div className="flex gap-4 w-full max-w-2xl">
         <Button
           onClick={onRegenerate}
-          className="flex-1 bg-gradient-to-r from-storybuddy-lavender to-storybuddy-blue text-white hover:opacity-90 transition-all duration-300"
+          className="flex-1 bg-gradient-to-r from-[#8A2BE2] to-[#3CB371] text-white hover:opacity-90 transition-all duration-300"
         >
           <div className="flex items-center gap-2">
             <Play className="w-4 h-4" />
@@ -45,8 +56,8 @@ const StoryDisplay = ({ story, onRegenerate }: StoryDisplayProps) => {
           </div>
         </Button>
         <Button
-          onClick={handleDownload}
-          className="flex-1 bg-gradient-to-r from-green-400 to-blue-500 text-white hover:opacity-90 transition-all duration-300"
+          onClick={downloadAsImage}
+          className="flex-1 bg-gradient-to-r from-[#00C9FF] to-[#92FE9D] text-white hover:opacity-90 transition-all duration-300"
         >
           <div className="flex items-center gap-2">
             <Download className="w-4 h-4" />
@@ -54,7 +65,7 @@ const StoryDisplay = ({ story, onRegenerate }: StoryDisplayProps) => {
           </div>
         </Button>
       </div>
-    </Card>
+    </div>
   );
 };
 
