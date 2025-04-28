@@ -24,14 +24,13 @@ export async function callAIModel(deviceId: string, app: string, prompt: string)
         "Authorization": `Bearer ${apiKey}`,
     },
       body: JSON.stringify({
-        model: "openai/gpt-4.1-nano",
-        messages: [
-          {
-            role: "user",
-            content: prompt,
-          },
-        ],
-      }),
+        "model": "openai/gpt-4.1-nano",
+        "messages": [
+          { "role": "system", "content": "You are a helpful story writing assistant." },
+          { "role": "user", "content": "Write a fantasy bedtime story for kids." }
+        ]
+      }
+      ),
     });
 
     if (!res.ok) {
