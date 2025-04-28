@@ -24,7 +24,7 @@ export async function callAIModel(deviceId: string, app: string, prompt: string)
         "Authorization": `Bearer ${apiKey}`,
     },
       body: JSON.stringify({
-        model: "openrouter/optimus-alpha",
+        model: "openai/gpt-4.1-nano",
         messages: [
           {
             role: "user",
