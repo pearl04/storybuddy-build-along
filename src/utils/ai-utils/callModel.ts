@@ -17,13 +17,6 @@ export async function callAIModel(deviceId: string, app: string, prompt: string)
     const apiKey = await fetchOpenRouterKey();
     console.log("🔑 Got OpenRouter API Key");
 
-    // Build a strong story prompt using the input
-    const fullPrompt = `
-    Write a magical bedtime story of at least 8 lines.
-    User's input to inspire the story: "${prompt}".
-    Make it imaginative, heartwarming, easy for kids to understand, and end with a positive message.
-    `;
-
     const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -31,11 +24,11 @@ export async function callAIModel(deviceId: string, app: string, prompt: string)
         "Authorization": `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "openai/gpt-4.1-nano",
-        messages: [
-          { role: "system", content: "You are a creative bedtime storyteller." },
-          { role: "user", content: fullPrompt },
-        ],
+        "model": "openai/gpt-4.1-nano",
+        "messages": [
+          { "role": "system", "content": "You are a helpful assistant who writes creative, fun bedtime stories for kids based on the provided inputs." },
+          { "role": "user", "content": prompt }
+        ]
       }),
     });
 
@@ -48,14 +41,14 @@ export async function callAIModel(deviceId: string, app: string, prompt: string)
     const data = await res.json();
     console.log("✅ OpenRouter response:", data);
 
-    const storyContent = data?.choices?.[0]?.message?.content?.trim();
+    const storyContent = data?.choices?.[0]?.message?.content;
 
     if (!storyContent) {
       console.error("❌ No story content generated!");
       return null;
     }
 
-    return storyContent;
+    return storyContent.trim();
   } catch (error) {
     console.error("❌ Error calling AI model:", error);
     return null;
