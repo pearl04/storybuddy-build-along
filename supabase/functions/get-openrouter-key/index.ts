@@ -1,15 +1,36 @@
-// supabase/functions/get-openrouter-key/index.ts
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 serve(async (req) => {
-  const openRouterKey = Deno.env.get("OPENROUTER_API_KEY");
-  
-  if (!openRouterKey) {
-    return new Response("OpenRouter API key not set", { status: 500 });
+  if (req.method === "OPTIONS") {
+    return new Response("ok", {
+      headers: {
+        "Access-Control-Allow-Origin": "https://storybuddy-build-along.vercel.app",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    });
   }
 
-  return new Response(
-    JSON.stringify({ key: openRouterKey }),
-    { headers: { "Content-Type": "application/json" } }
-  );
+  const openRouterApiKey = Deno.env.get("OPENROUTER_API_KEY");
+
+  if (!openRouterApiKey) {
+    return new Response(
+      JSON.stringify({ msg: "Error: Missing OPENROUTER_API_KEY" }),
+      {
+        status: 500,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
+
+  return new Response(JSON.stringify({ key: openRouterApiKey }), {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+    },
+  });
 });
