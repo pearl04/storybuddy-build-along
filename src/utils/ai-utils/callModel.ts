@@ -35,7 +35,7 @@ Keep the story between 8 to 10 lines.
 Always end the story on a positive and happy note.
 `;
 
-    const res = await fetch("https://bfpeaeeshgwlmchixhbv.functions.supabase.co/generate-story", {
+    const res = await fetch("https://bfpeaeeshgwlmchixhbv.supabase.co/functions/v1/generate-story", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
