@@ -101,17 +101,21 @@ const StoryForm = ({ onStoryGenerated }: StoryFormProps) => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
+      if (!childName || !childAge || !storyTheme) {
+        alert("Please fill in all fields before generating the story!");
+        return;
+      }
+
       setLoading(true);
 
-      const prompt = `
-Write a magical bedtime story for a ${childAge}-year-old child named ${childName}.
-The theme is ${storyTheme}.
-Make it 4–6 sentences long, comforting, and imaginative.
-End with a soft line like: "And then they drifted off to sleep under the stars..."
-`.trim();
-
       try {
-        const storyResult = await callAIModel(deviceId, "StoryBuddy", prompt);
+        const storyResult = await callAIModel(
+          deviceId,
+          "storybuddy",
+          childName,
+          Number(childAge),
+          storyTheme
+        );
         setLoading(false);
 
         if (!storyResult) {
