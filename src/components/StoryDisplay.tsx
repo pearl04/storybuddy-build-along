@@ -28,6 +28,7 @@ const StoryDisplay = ({ story, onRegenerate }: StoryDisplayProps) => {
 
   return (
     <>
+      {/* Visible Card */}
       <Card className="w-full max-w-2xl p-8 bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 backdrop-blur-sm shadow-xl rounded-3xl border-2 border-white/30 relative overflow-hidden">
         <div className="prose max-w-none font-poppins">
           <div className="text-lg leading-relaxed whitespace-pre-wrap space-y-4 text-gray-700">
@@ -55,12 +56,17 @@ const StoryDisplay = ({ story, onRegenerate }: StoryDisplayProps) => {
         </div>
       </Card>
 
-      {/* Hidden div for clean download */}
+      {/* Hidden Div for clean download */}
       <div
         ref={exportRef}
-        className="fixed top-[-9999px] left-[-9999px] w-[600px] p-8 bg-pink-100 rounded-3xl text-gray-700 shadow-lg font-poppins text-lg leading-relaxed whitespace-pre-wrap"
+        className="fixed top-[-9999px] left-[-9999px] w-[600px] p-8 rounded-3xl text-gray-700 font-poppins text-lg leading-relaxed whitespace-pre-wrap"
+        style={{
+          backgroundImage: "linear-gradient(135deg, #ffe4e6, #e0c3fc, #c2e9fb)",
+          backgroundSize: "cover",
+          boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
+        }}
       >
-        <h1 className="text-2xl font-bold text-purple-600 mb-4 text-center">✨ Your Magical Story ✨</h1>
+        <h1 className="text-2xl font-bold text-purple-600 mb-6 text-center">✨ Your Magical Story ✨</h1>
         <div>{story}</div>
       </div>
     </>
