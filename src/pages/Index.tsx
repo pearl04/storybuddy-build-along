@@ -1,11 +1,13 @@
 import { useState } from "react";
 import StoryForm from "@/components/StoryForm";
 import StoryDisplay from "@/components/StoryDisplay";
-import { callAIModel } from "@/utils/ai-utils/callModel";
 import { Card } from "@/components/ui/card";
 import { Loader, Star, Moon, Cloud, Sparkle } from "lucide-react";
+import { callAIModel } from "@/utils/ai-utils/callModel";
+import { useDeviceId } from "@/hooks/useDeviceId"; // <== Add this if you want dynamic device ID
 
 const Index = () => {
+  const deviceId = useDeviceId(); // dynamic, safer than hardcoding "storybuddy-device-1"
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedStory, setGeneratedStory] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -15,19 +17,19 @@ const Index = () => {
     setError(null);
 
     try {
-      const prompt = `Write a creative and engaging children's bedtime story about "${storyTheme}", featuring a ${childAge} year old child named "${childName}". Make it magical but easy to understand for a child.`;
+      const result = await callAIModel(
+        deviceId,
+        "storybuddy",
+        childName,
+        Number(childAge),
+        storyTheme
+      );
 
-      const result = await callAIModel({
-        prompt,
-        deviceId: "storybuddy-device-1",
-        app: "StoryBuddy",
-      });
-
-      if (!result || !result.success) {
-        throw new Error(result?.error || "Something went wrong!");
+      if (!result) {
+        throw new Error("Something went wrong! No story generated.");
       }
 
-      setGeneratedStory(result.data);
+      setGeneratedStory(result);
     } catch (err: any) {
       console.error(err);
       setError(err.message || "Oops! Something went wrong. Please try again.");
@@ -75,7 +77,10 @@ const Index = () => {
               <div className="flex flex-col items-center gap-4">
                 <p className="text-red-400 font-poppins">{error}</p>
                 <button
-                  onClick={() => setError(null)}
+                  onClick={() => {
+                    setError(null);
+                    setGeneratedStory(null);
+                  }}
                   className="text-red-500 hover:underline font-poppins"
                 >
                   Try Again
