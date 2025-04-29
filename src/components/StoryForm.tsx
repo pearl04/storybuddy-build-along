@@ -1,6 +1,7 @@
 // src/components/StoryForm.tsx
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import posthog from "posthog-js";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,6 +28,20 @@ const StoryForm = ({ onStoryGenerated }: StoryFormProps) => {
   const [storyTheme, setStoryTheme] = useState("");
   const [currentStep, setCurrentStep] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!hasSubmitted) {
+        posthog.capture("dropOff", {
+          screen: currentStep,
+          childNameFilled: childName.length > 0,
+        });
+      }
+    }, 15000);
+
+    return () => clearTimeout(timeout);
+  }, [currentStep, childName, hasSubmitted]);
 
   const steps = [
     {
@@ -105,9 +120,9 @@ const StoryForm = ({ onStoryGenerated }: StoryFormProps) => {
         alert("Please fill in all fields before generating the story!");
         return;
       }
-  
+
       setLoading(true);
-  
+
       try {
         const storyResult = await callAIModel(
           deviceId,
@@ -116,12 +131,20 @@ const StoryForm = ({ onStoryGenerated }: StoryFormProps) => {
           Number(childAge),
           storyTheme
         );
+
         setLoading(false);
-  
+        setHasSubmitted(true);
+
         if (!storyResult) {
           console.error("AI Model returned nothing");
           alert("Something went wrong. Please try again!");
         } else {
+          posthog.capture("storyGenerated", {
+            nameLength: childName.length,
+            age: childAge,
+            theme: storyTheme,
+          });
+
           onStoryGenerated({ childName, childAge, storyTheme, story: storyResult });
         }
       } catch (error) {
@@ -131,7 +154,6 @@ const StoryForm = ({ onStoryGenerated }: StoryFormProps) => {
       }
     }
   };
-  
 
   return (
     <Card className="w-full max-w-md p-6 bg-gradient-to-br from-[#FF7F50] via-[#FF69B4] to-[#4169E1] backdrop-blur-sm shadow-xl rounded-2xl border-2 border-white/30">
